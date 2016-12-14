@@ -3,15 +3,21 @@ var Stack = function() {
 
   // Use an object with numeric keys to store values
   var storage = {};
-  var size = 0
+  var size = 0;
 
   // Implement the methods below
   someInstance.push = function(value) {
     size++;
+    storage[size] = value;
+    console.log(storage);
   };
 
   someInstance.pop = function() {
-    size--;
+    if (size > 0) {
+      size--;
+    }
+    return storage[1];
+    delete storage[0];
   };
 
   someInstance.size = function() {
@@ -20,3 +26,9 @@ var Stack = function() {
 
   return someInstance;
 };
+
+
+        // stack.push('a');
+        // expect(stack.pop()).to.equal('a');
+        // stack.push('b');
+        // expect(stack.pop()).to.equal('b');
