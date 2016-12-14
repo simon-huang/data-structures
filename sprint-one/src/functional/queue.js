@@ -2,21 +2,25 @@ var Queue = function() {
   var someInstance = {};
 
   // Use an object with numeric keys to store values
-  var storage = {};
+  var storage = [];
   var size = 0;
 
   // Implement the methods below
 
   someInstance.enqueue = function(value) {
+
     size++;
-    storage[size - 1] = value;
+    storage.push(value);
   };
 
   someInstance.dequeue = function() {
+
     if (size > 0) {
       size--;
-    }
-    return storage[size];
+      return storage.shift();
+    } 
+
+
   };
 
   someInstance.size = function() {
@@ -25,3 +29,9 @@ var Queue = function() {
 
   return someInstance;
 };
+// AssertionError: expected 'a' to equal 'b'
+// queue.enqueue('a');
+// queue.enqueue('b');
+// queue.dequeue();
+// queue.enqueue('c');
+// expect(queue.dequeue()).to.equal('b');
