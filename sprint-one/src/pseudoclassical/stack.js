@@ -1,23 +1,21 @@
-var Stack = function() {
-  this.storage = {};
-  this.index = 0;
-};
-
+var Stack = {};
+Stack.storage = {};
+Stack.index = 0;
 
 Stack.prototype['push'] = function(value) {
-  this.storage[this.index] = value;
-  this.index++;
+  Stack.storage[Stack.index] = value;
+  Stack.index++;
 };
 
 Stack.prototype['pop'] = function() {
-  if (this.index > 0) {
-    this.index--;
-    var result = this.storage[this.index];
-    delete this.storage[this.index];
+  if (Stack.index > 0) {
+    Stack.index--;
+    var result = Stack.storage[Stack.index];
+    delete Stack.storage[Stack.index];
     return result;
   }
 };
 
 Stack.prototype['size'] = function() {
-  return this.index;
+  return Stack.index;
 };
