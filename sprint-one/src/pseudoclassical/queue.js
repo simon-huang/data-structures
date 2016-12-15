@@ -5,8 +5,6 @@ var Queue = function() {
 
 };
 
-
-
 Queue.prototype['enqueue'] = function(value) {
   this.storage[this.index] = value;
   this.index++;
@@ -28,3 +26,4 @@ Queue.prototype['size'] = function() {
   return this.index;
 };
 
+var newQueue = new Queue;
