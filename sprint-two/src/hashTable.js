@@ -7,44 +7,63 @@ var HashTable = function() {
 
 HashTable.prototype.insert = function(k, v) {
   var index = getIndexBelowMaxForKey(k, this._limit);
-  /*
-  if (retrieve(index))
-  create a holder variable and set the retrieve(index)
-  create an array to put in the bucket
-  put an object for the original contents of the buket into the 
-  new bucket array
-  create an object for the key value pair we are newly inserting
-  put that object into the bucket array
+  var isThere = false;
+  var bucket;
+  if ( this._storage.get(index) === undefined ) {
+    bucket = [];
+  } else {
+    bucket = this._storage.get(index);
+  }
+  for (var i = 0; i < bucket.length; i++) {
+    if (bucket[i][0] === k) {
+      bucket[i][1] = v;
+      isThere = true;
+    }
+  }
+  if (!isThere) {
+    bucket.push([k, v]);
+  }
 
-  else
-  */
-  this._storage.set(index, v);
+  this._storage.set(index, bucket);
 };
 
 HashTable.prototype.retrieve = function(k) {
+  //use the original key and length of ht to get hash that corresponds to index in hash table
+  //retrieve entire bucket at that index
+  //traverse bucket, examining all keys 
+    // if we find input key in bucket,
+      // return the value
+  // if we can't find it, return undef   
   var index = getIndexBelowMaxForKey(k, this._limit);
-    /*
-  if (retrieve(index) is in array)
-  still retrieve what's there and set it ot a holder variable
-  loop through the holder variable
-  look for the variable with the same key as the input
-  if one is there, that is the value
-  if you can't find one, then it's the object with the 
-  create a holder variable and set the retrieve(index)
-  create an array to put in the bucket
-  put an object for the original contents of the buket into the 
-  new bucket array
-  create an object for the key value pair we are newly inserting
-  put that object into the bucket array
-
-  else
-  */
-  return this._storage.get(index);
+  var bucket = this._storage.get(index);
+  for (var i = 0; i < bucket.length; i++) {
+    if (bucket[i][0] === k) {
+      return bucket[i][1];
+    }
+  }
+  return undefined;
 };
 
 HashTable.prototype.remove = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
-  this._storage.set(index, undefined);
+  var bucket = this._storage.get(index);
+  if (bucket === undefined) {
+    return;
+  }
+  for (var i = 0; i < bucket.length; i++) {
+    if (bucket[i][0] === k) {
+      bucket.splice(i, 1);
+    }
+  }
+
+  /*
+  get index by calling hashing function using k and limit
+  needs to access the storage at index
+  set bucket to variable to work with it
+  for each element in bucket
+  if element's key is equal to k
+  then remove this element 
+  */
 };
 
 
