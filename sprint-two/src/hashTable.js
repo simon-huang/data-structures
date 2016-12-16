@@ -79,6 +79,7 @@ var getIndexBelowMaxForKey1 = function(str, max) {
 
 /*
  * Complexity: What is the time complexity of the above functions?
+  insert, retrieve, remove = usually O(1) but worst case O(n)
  */
 
 

@@ -28,11 +28,10 @@ Graph.prototype.contains = function(node) {
 Graph.prototype.removeNode = function(node) {
   for (var i = 0; i < this.nodes.length; i++) {
     if (this.nodes[i].value === node) {
-      this.nodes = this.nodes.slice(0, i).concat(this.nodes.slice(i + 1));
+      this.nodes.splice(i, 1);
     }
   }
 };
-
 // Returns a boolean indicating whether two specified nodes are connected.  Pass in the values contained in each of the two nodes.
 Graph.prototype.hasEdge = function(fromNode, toNode) {
   var fromNodeBool = false;
@@ -69,10 +68,10 @@ Graph.prototype.addEdge = function(fromNode, toNode) {
 Graph.prototype.removeEdge = function(fromNode, toNode) {
   for (var i = 0; i < this.nodes.length; i++) {
     if (this.nodes[i].value === fromNode) {
-      this.nodes[i].edges = this.nodes[i].edges.slice(0, i).concat(this.nodes[i].edges.slice(i + 1));
+      this.nodes[i].edges.splice(0, i);
     }
     if (this.nodes[i].value === toNode) {
-      this.nodes[i].edges = this.nodes[i].edges.slice(0, i).concat(this.nodes[i].edges.slice(i + 1));
+      this.nodes[i].edges.splice(i, 1);
     }
   }
 
@@ -87,6 +86,8 @@ Graph.prototype.forEachNode = function(cb) {
 
 /*
  * Complexity: What is the time complexity of the above functions?
+ addNode = O(1) 
+ contains, removeNode, hasEdge, addEdge, removeEdge, forEachNode = O(n) 
  */
 
 
