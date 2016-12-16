@@ -11,16 +11,12 @@ var Tree = function(value) {
 var treeMethods = {};
 
 treeMethods.addChild = function(value) {
-  // if (!this.value) {
-  //   this.value = value;
-  // } else {
+
   this.children.push(Tree(value));
-  // }
 
 };
 
 treeMethods.contains = function(target) {
-  console.log(this);
   if (this.value === target) {
     return true;
   }
@@ -28,7 +24,6 @@ treeMethods.contains = function(target) {
     if (this.children[i].contains(target)) {
       return true;
     } 
-    //continue;
   }
   return false;
 };

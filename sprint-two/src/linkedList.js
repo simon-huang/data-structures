@@ -17,7 +17,7 @@ var LinkedList = function() {
     }
     list.tail = newTail;
     list.count++;
-    console.log(list.head);
+
   };
 
   list.removeHead = function() {
@@ -25,7 +25,7 @@ var LinkedList = function() {
     list.head = list.head.next;
     list.count--;
     return currentHeadValue;
-    console.log(list.head);
+
   };
 
   list.contains = function(target) {
