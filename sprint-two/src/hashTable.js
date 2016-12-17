@@ -7,33 +7,32 @@ var HashTable = function() {
   this._filled = [];
 };
 
-HashTable.prototype.double = function() {
+HashTable.prototype.resize = function(v) {
   this._limit *= 2;
   var allDouples = [];
   var bucket;
-  //get every filled bucket and add those douples to array of all douples
-  //console.log(this._storage);
   var table = this;
-  //console.log(this._filled);
+  //get every filled bucket and add those douples to array of all douples
   _.each(this._filled, function(filledIndexInHash) {
-    //console.log(this._storage);
+    console.log(this);
     bucket = table._storage.get(filledIndexInHash);
-    //console.log(bucket);
-    //console.log(bucket);
     _.each(bucket, function(doupleInBucket) {
-      //console.log(bucket[indexOfDoupleInBucket]);
-      //console.log(doupleInBucket);
       allDouples.push(doupleInBucket);
     });
+    console.log(bucket);
+    // for (var i = 0; i < bucket.length; i++) {
+    //   console.log(bucket);
+    //   allDouples.push(bucket[i]);
+    // }
   });
   this._filled = [];
-  //console.log(allDouples);
   //use this.insert on all elements in allDouples
   _.each(allDouples, function(douple) {
-    console.log(douple[0], douple[1]);
-    table.insert(douple[0], douple[1]); 
+    console.log(this);
+    table.insert(douple[0], douple[1]);
   });
 };
+
 
 HashTable.prototype.insert = function(k, v) {
   var index = getIndexBelowMaxForKey(k, this._limit);
@@ -63,7 +62,11 @@ HashTable.prototype.insert = function(k, v) {
   //console.log(this._filled);
   if (this._filled.length >= this._limit * .75) {
     //console.log('too much');
-    this.double();
+    this.resize(2);
+  }
+  if (this._filled.length <= this._limit * .25) {
+    //console.log('too much');
+    this.resize(.5);
   }
 
 };
@@ -103,6 +106,12 @@ HashTable.prototype.remove = function(k) {
     var indexInArrayOfFilledBuckets = _.indexOf(this._filled, bucket);
     this._filled.splice(indexInArrayOfFilledBuckets, 1);
   }
+
+  // if (this._filled.length <= this._limit * .25) {
+  //   //console.log('too much');
+  //   this.resize(.5);
+  // }
+
   /*
   get index by calling hashing function using k and limit
   needs to access the storage at index

@@ -12,8 +12,9 @@
 //   limitedArray.get(3); // returns 'hi'
 
 var LimitedArray = function(limit) {
-  var storage = [];
 
+  var storage = [];
+  //console.log(limit, this);
   var limitedArray = {};
   limitedArray.get = function(index) {
     checkLimit(index);
@@ -31,10 +32,13 @@ var LimitedArray = function(limit) {
 
   var checkLimit = function(index) {
     if (typeof index !== 'number') {
-      throw new Error('setter requires a numeric index for its first argument');
+      // throw new Error('setter requires a numeric index for its first argument');
+      //console.log('setter requires a numeric index for its first argument');
     }
     if (limit <= index) {
+      //console.log(limit, index);
       throw new Error('Error trying to access an over-the-limit index');
+      // console.log('Error trying to access an over-the-limit index');
     }
   };
 
