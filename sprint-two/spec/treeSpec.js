@@ -6,7 +6,6 @@ describe('tree', function() {
   });
 
   it('should have methods named "addChild" and "contains", and a property named "value"', function() {
-    console.log(tree);
     expect(tree.addChild).to.be.a('function');
     expect(tree.contains).to.be.a('function');
     expect(tree.hasOwnProperty('value')).to.equal(true);
