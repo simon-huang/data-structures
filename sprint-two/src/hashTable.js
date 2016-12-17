@@ -1,7 +1,7 @@
 
 
 var HashTable = function() {
-  this._limit = 8;
+  this._limit = 4;
   this._storage = LimitedArray(this._limit);
   //indexes/buckets that have had douples inserted
   this._filled = [];
@@ -12,16 +12,26 @@ HashTable.prototype.double = function() {
   var allDouples = [];
   var bucket;
   //get every filled bucket and add those douples to array of all douples
-  _.each(list, function(filledIndexInHash) {
-    bucket = this._storage.get(filledIndexInHash);
-    _.each(bucket, function(indexOfDoupleInBucket) {
-      allDouples.push(bucket[indexOfDoupleInBucket]);
+  //console.log(this._storage);
+  var table = this;
+  //console.log(this._filled);
+  _.each(this._filled, function(filledIndexInHash) {
+    //console.log(this._storage);
+    bucket = table._storage.get(filledIndexInHash);
+    //console.log(bucket);
+    //console.log(bucket);
+    _.each(bucket, function(doupleInBucket) {
+      //console.log(bucket[indexOfDoupleInBucket]);
+      //console.log(doupleInBucket);
+      allDouples.push(doupleInBucket);
     });
   });
   this._filled = [];
+  //console.log(allDouples);
   //use this.insert on all elements in allDouples
   _.each(allDouples, function(douple) {
-    this.insert(douple[0], douple[1]);
+    console.log(douple[0], douple[1]);
+    table.insert(douple[0], douple[1]); 
   });
 };
 

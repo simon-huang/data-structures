@@ -50,17 +50,17 @@ describe('hashTable', function() {
   // });
 
   // (Advanced! Remove the extra "x" when you want the following tests to run)
-  // it ('should double in size when needed', function() {
-  //   _.each(people, function(person) {
-  //     var firstName = person[0];
-  //     var lastName = person[1];
-  //     hashTable.insert(firstName, lastName);
-  //     expect(hashTable.retrieve(firstName)).to.equal(lastName);
-  //   });
-  //   //when the limit is 8, adding the entire 'people' collection will only
-  //   //result in 5 indexes being filled (6 would be 3/4)
-  //   expect(hashTable._limit).to.equal(8);
-  // });
+  it ('should double in size when needed', function() {
+    _.each(people, function(person) {
+      var firstName = person[0];
+      var lastName = person[1];
+      hashTable.insert(firstName, lastName);
+      expect(hashTable.retrieve(firstName)).to.equal(lastName);
+    });
+    //when the limit is 8, adding the entire 'people' collection will only
+    //result in 5 indexes being filled (6 would be 3/4)
+    expect(hashTable._limit).to.equal(8);
+  });
 
   xit ('should halve in size when needed', function() {
     _.each(people, function(person) {
