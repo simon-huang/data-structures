@@ -3,6 +3,26 @@
 var HashTable = function() {
   this._limit = 8;
   this._storage = LimitedArray(this._limit);
+  //indexes/buckets that have had douples inserted
+  this._filled = [];
+};
+
+HashTable.prototype.double = function() {
+  this._limit *= 2;
+  var allDouples = [];
+  var bucket;
+  //get every filled bucket and add those douples to array of all douples
+  _.each(list, function(filledIndexInHash) {
+    bucket = this._storage.get(filledIndexInHash);
+    _.each(bucket, function(indexOfDoupleInBucket) {
+      allDouples.push(bucket[indexOfDoupleInBucket]);
+    });
+  });
+  this._filled = [];
+  //use this.insert on all elements in allDouples
+  _.each(allDouples, function(douple) {
+    this.insert(douple[0], douple[1]);
+  });
 };
 
 HashTable.prototype.insert = function(k, v) {
@@ -14,6 +34,11 @@ HashTable.prototype.insert = function(k, v) {
   } else {
     bucket = this._storage.get(index);
   }
+
+  if (bucket.length === 0) {
+    this._filled.push(index);
+  }
+
   for (var i = 0; i < bucket.length; i++) {
     if (bucket[i][0] === k) {
       bucket[i][1] = v;
@@ -25,6 +50,12 @@ HashTable.prototype.insert = function(k, v) {
   }
 
   this._storage.set(index, bucket);
+  //console.log(this._filled);
+  if (this._filled.length >= this._limit * .75) {
+    //console.log('too much');
+    this.double();
+  }
+
 };
 
 HashTable.prototype.retrieve = function(k) {
@@ -55,7 +86,13 @@ HashTable.prototype.remove = function(k) {
       bucket.splice(i, 1);
     }
   }
+  // why is this unnecessary?
+  //this._storage.set(index, bucket);
 
+  if (bucket.length === 0) {
+    var indexInArrayOfFilledBuckets = _.indexOf(this._filled, bucket);
+    this._filled.splice(indexInArrayOfFilledBuckets, 1);
+  }
   /*
   get index by calling hashing function using k and limit
   needs to access the storage at index
