@@ -11,7 +11,6 @@ var treeMethods = {};
 
 treeMethods.addChild = function(value) {
   var newT = Tree(value);
-  console.log(this);
   newT.parent = this;
   this.children.push(newT);
 
@@ -42,9 +41,30 @@ treeMethods.removeFromParent = function() {
   // if the value of the tree at the current index is equal to our child tree's value
   // then we splice it from the children array
 };
+treeMethods.traverse = function(callback) {
+// take a callback and start on tree
+// execute callback on value of the tree
+// if the tree has children, we want to run the callback on the children
+// loop through tree's children
+  if (this.value !== undefined) {
+    callback(this.value);
+  }
+  if (this.children.length === 0) {
+    return;
+  }
+  for (var i = 0; i < this.children.length; i++) {
+    this.children[i].traverse(callback);
+  }
+  //forloop
+    //call traverse on each el
+};
 //
 /*
  * Complexity: What is the time complexity of the above functions?
  addChild = O(1)
  contains = O(n)
  */
+
+// Implement a .traverse() method on your tree. 
+// Your .traverse() should accept a callback and 
+// execute it on every value contained in the tree
