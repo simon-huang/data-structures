@@ -7,28 +7,29 @@ var HashTable = function() {
   this._filled = [];
 };
 
-HashTable.prototype.resize = function(v) {
-  this._limit *= 2;
+HashTable.prototype.resize = function() {
+  // this._limit *= v;
   var allDouples = [];
   var bucket;
   var table = this;
   //get every filled bucket and add those douples to array of all douples
   _.each(this._filled, function(filledIndexInHash) {
-    console.log(this);
+    //console.log(this);
     bucket = table._storage.get(filledIndexInHash);
     _.each(bucket, function(doupleInBucket) {
       allDouples.push(doupleInBucket);
     });
-    console.log(bucket);
+    //console.log(bucket);
     // for (var i = 0; i < bucket.length; i++) {
     //   console.log(bucket);
     //   allDouples.push(bucket[i]);
     // }
   });
   this._filled = [];
+  this._storage = LimitedArray(this._limit);
   //use this.insert on all elements in allDouples
   _.each(allDouples, function(douple) {
-    console.log(this);
+    //console.log(this);
     table.insert(douple[0], douple[1]);
   });
 };
@@ -62,12 +63,13 @@ HashTable.prototype.insert = function(k, v) {
   //console.log(this._filled);
   if (this._filled.length >= this._limit * .75) {
     //console.log('too much');
-    this.resize(2);
+    this._limit *= 2;
+    this.resize();
   }
-  if (this._filled.length <= this._limit * .25) {
-    //console.log('too much');
-    this.resize(.5);
-  }
+  // if (this._filled.length <= this._limit * .25) {
+  //   //console.log('too much');
+  //   this.resize(.5);
+  // }
 
 };
 
@@ -103,10 +105,14 @@ HashTable.prototype.remove = function(k) {
   //this._storage.set(index, bucket);
 
   if (bucket.length === 0) {
-    var indexInArrayOfFilledBuckets = _.indexOf(this._filled, bucket);
+    var indexInArrayOfFilledBuckets = _.indexOf(this._filled, index);
     this._filled.splice(indexInArrayOfFilledBuckets, 1);
   }
 
+  if (this._filled.length <= this._limit * .25) {
+    this._limit = Math.max((this._limit * .5), 4);
+    this.resize();
+  }
   // if (this._filled.length <= this._limit * .25) {
   //   //console.log('too much');
   //   this.resize(.5);
