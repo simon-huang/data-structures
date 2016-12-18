@@ -55,6 +55,26 @@ bsTreeMethods.depthFirstLog = function(f) {
   }
 };
 
+bsTreeMethods.breadthFirstLog = function() {
+  //we log the value of the current tree
+  //we want to log the values of the current tree's children
+  //if our array now has b and c
+  // log b and c
+  //
+  var queue = [this];
+  var current;
+  while (queue.length !== 0) {
+    current = queue.shift();
+    console.log(current.value);
+    if (current.left) {
+      queue.push(current.left);
+    }
+    if (current.right) {
+      queue.push(current.right);
+    }
+
+  }
+};
 
 /*
  * Complexity: What is the time complexity of the above functions?
